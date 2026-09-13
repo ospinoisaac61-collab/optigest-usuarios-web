@@ -1,0 +1,12 @@
+target/
+*.class
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+*.log
+
+# Credenciales locales: nunca se suben al repositorio.
+src/main/resources/db.properties

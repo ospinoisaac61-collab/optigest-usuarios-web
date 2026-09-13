@@ -1,0 +1,129 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F5F7FB;
+    color: #1A1A2E;
+    margin: 0;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+.contenedor.angosto {
+    max-width: 520px;
+}
+
+.encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 1.3rem;
+    color: #1F4E79;
+}
+
+.boton {
+    background: #2E75B6;
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: .85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.boton.secundario {
+    background: #fff;
+    color: #1F4E79;
+    border: 1px solid #D9E2EF;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(31,78,121,.10);
+}
+
+.tabla th, .tabla td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #D9E2EF;
+    text-align: left;
+    font-size: .85rem;
+}
+
+.tabla th {
+    background: #EBF3FB;
+    color: #1F4E79;
+    text-transform: uppercase;
+    font-size: .72rem;
+}
+
+.tabla .vacio {
+    text-align: center;
+    color: #6B6B8A;
+    padding: 24px;
+}
+
+.badge {
+    background: #DCE6F1;
+    color: #1F4E79;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.estado {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.estado.activo { background: #E1F5EE; color: #0F6E56; }
+.estado.inactivo { background: #FCE4E4; color: #C00000; }
+
+.acciones a {
+    margin-right: 10px;
+    font-size: .8rem;
+    color: #2E75B6;
+    text-decoration: none;
+}
+
+.acciones .enlace-peligro { color: #C00000; }
+
+.formulario {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(31,78,121,.10);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.campo label {
+    display: block;
+    font-size: .8rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #3A3A5C;
+}
+
+.campo input, .campo select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1.5px solid #D9E2EF;
+    border-radius: 6px;
+    font-size: .875rem;
+}
