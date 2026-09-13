@@ -1,33 +1,45 @@
 package com.optigest.usuariosweb.modelo;
 
+import java.time.LocalDateTime;
+
 /**
  * Entidad que representa un usuario del sistema OptiGest ERP.
- * Corresponde a la tabla "usuarios" de la base de datos.
+ * Corresponde a la tabla "usuario" del diseño oficial de base de datos
+ * (evidencia GA6-220501096-AA2-EV02/EV03).
  */
 public class Usuario {
 
+    // Identificador único (columna id_usuario, autoincremental).
     private int id;
+
     private String nombre;
-    private String usuario;
-    private String correo;
-    private String clave;
-    private String celular;
+
+    // También funciona como credencial de inicio de sesión (columna UNIQUE).
+    private String email;
+
+    // Guarda el hash de la contraseña, nunca el texto plano (ver clase Seguridad).
+    private String password;
+
     private String rol;
-    private String estado;
+
+    // true = activo, false = inactivo (columna BOOLEAN en la base de datos).
+    private boolean estado;
+
+    // La asigna la base de datos automáticamente (DEFAULT CURRENT_TIMESTAMP).
+    private LocalDateTime fechaCreacion;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String usuario, String correo,
-                   String clave, String celular, String rol, String estado) {
+    public Usuario(int id, String nombre, String email, String password,
+                   String rol, boolean estado, LocalDateTime fechaCreacion) {
         this.id = id;
         this.nombre = nombre;
-        this.usuario = usuario;
-        this.correo = correo;
-        this.clave = clave;
-        this.celular = celular;
+        this.email = email;
+        this.password = password;
         this.rol = rol;
         this.estado = estado;
+        this.fechaCreacion = fechaCreacion;
     }
 
     public int getId() {
@@ -46,36 +58,20 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRol() {
@@ -86,11 +82,19 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public String getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }

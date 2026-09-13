@@ -2,6 +2,6 @@
 # Copia este archivo como "db.properties" (en la misma carpeta) y coloca
 # tus propias credenciales. "db.properties" esta en .gitignore a proposito:
 # las contrasenias nunca deben subirse al repositorio.
-db.url=jdbc:postgresql://localhost:5432/optigest_db
+db.url=jdbc:postgresql://localhost:5432/optigest_bd
 db.usuario=postgres
 db.clave=tu_password_de_postgres

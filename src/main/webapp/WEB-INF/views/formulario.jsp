@@ -9,6 +9,7 @@
 </head>
 <body>
 <%
+    // El servlet deja aqui el usuario a editar, o un Usuario vacio si es "nuevo".
     Usuario usuario = (Usuario) request.getAttribute("usuario");
     if (usuario == null) usuario = new Usuario();
     boolean esEdicion = usuario.getId() > 0;
@@ -33,26 +34,14 @@
         </div>
 
         <div class="campo">
-            <label for="usuario">Nombre de usuario</label>
-            <input type="text" id="usuario" name="usuario" required
-                   value="<%= usuario.getUsuario() != null ? usuario.getUsuario() : "" %>">
+            <label for="email">Correo electr&oacute;nico</label>
+            <input type="email" id="email" name="email" required
+                   value="<%= usuario.getEmail() != null ? usuario.getEmail() : "" %>">
         </div>
 
         <div class="campo">
-            <label for="correo">Correo electr&oacute;nico</label>
-            <input type="email" id="correo" name="correo" required
-                   value="<%= usuario.getCorreo() != null ? usuario.getCorreo() : "" %>">
-        </div>
-
-        <div class="campo">
-            <label for="clave">Contrase&ntilde;a<%= esEdicion ? " (dejar vacío para no cambiarla)" : "" %></label>
-            <input type="password" id="clave" name="clave" <%= esEdicion ? "" : "required" %>>
-        </div>
-
-        <div class="campo">
-            <label for="celular">Celular</label>
-            <input type="text" id="celular" name="celular"
-                   value="<%= usuario.getCelular() != null ? usuario.getCelular() : "" %>">
+            <label for="password">Contrase&ntilde;a<%= esEdicion ? " (dejar vacío para no cambiarla)" : "" %></label>
+            <input type="password" id="password" name="password" <%= esEdicion ? "" : "required" %>>
         </div>
 
         <div class="campo">
@@ -64,12 +53,11 @@
             </select>
         </div>
 
-        <div class="campo">
-            <label for="estado">Estado</label>
-            <select id="estado" name="estado" required>
-                <option value="Activo" <%= "Activo".equals(usuario.getEstado()) || !esEdicion ? "selected" : "" %>>Activo</option>
-                <option value="Inactivo" <%= "Inactivo".equals(usuario.getEstado()) ? "selected" : "" %>>Inactivo</option>
-            </select>
+        <div class="campo campo-checkbox">
+            <label>
+                <input type="checkbox" name="estado" <%= usuario.isEstado() || !esEdicion ? "checked" : "" %>>
+                Usuario activo
+            </label>
         </div>
 
         <button type="submit" class="boton">

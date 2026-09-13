@@ -61,12 +61,12 @@ sql/optigest_usuarios.sql
 
 - JDK 17 o superior.
 - Maven 3.8+.
-- PostgreSQL 12+ en ejecución local (la misma base `optigest_db` de AA2-EV01).
+- PostgreSQL 12+ en ejecución local (la misma base `optigest_bd` de AA2-EV01).
 
 ## Puesta en marcha
 
 1. **Base de datos.** Si ya hiciste la evidencia AA2-EV01 en esta misma máquina,
-   la base `optigest_db` y la tabla `usuarios` ya existen: no necesitas hacer
+   la base `optigest_bd` y la tabla `usuario` ya existen: no necesitas hacer
    nada más. Si es la primera vez, ejecuta:
 
    ```bash
@@ -77,7 +77,7 @@ sql/optigest_usuarios.sql
    como `src/main/resources/db.properties` y coloca tu contraseña real:
 
    ```properties
-   db.url=jdbc:postgresql://localhost:5432/optigest_db
+   db.url=jdbc:postgresql://localhost:5432/optigest_bd
    db.usuario=postgres
    db.clave=tu_password
    ```
@@ -116,3 +116,10 @@ Este módulo reutiliza el modelo de datos, el diagrama de clases y las
 historias de usuario del módulo de Usuarios definidos en las evidencias
 previas del proyecto OptiGest ERP, cambiando únicamente la capa de
 presentación de escritorio (Swing) por una interfaz web (Servlets + JSP).
+
+La tabla `usuario` y sus columnas (`id_usuario`, `nombre`, `email`,
+`password`, `rol`, `estado`, `fecha_creacion`) siguen exactamente el diseño
+oficial de base de datos del proyecto, definido en la evidencia
+GA6-220501096-AA2-EV02/EV03 (diagrama entidad-relación y script físico en
+MySQL). Este script está adaptado a PostgreSQL, pero conserva los mismos
+nombres de tabla y columnas.

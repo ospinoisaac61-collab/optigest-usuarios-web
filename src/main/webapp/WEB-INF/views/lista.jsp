@@ -16,6 +16,7 @@
     </div>
 
     <%
+        // La lista de usuarios la deja aqui el servlet (metodo doGet) antes de reenviar a esta vista.
         List<Usuario> usuarios = (List<Usuario>) request.getAttribute("usuarios");
     %>
 
@@ -24,9 +25,7 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Usuario</th>
-            <th>Correo</th>
-            <th>Celular</th>
+            <th>Email</th>
             <th>Rol</th>
             <th>Estado</th>
             <th>Acciones</th>
@@ -35,7 +34,7 @@
         <tbody>
         <% if (usuarios == null || usuarios.isEmpty()) { %>
         <tr>
-            <td colspan="8" class="vacio">No hay usuarios registrados todav&iacute;a.</td>
+            <td colspan="6" class="vacio">No hay usuarios registrados todav&iacute;a.</td>
         </tr>
         <% } else {
             for (Usuario usuario : usuarios) {
@@ -43,13 +42,11 @@
         <tr>
             <td>#<%= usuario.getId() %></td>
             <td><%= usuario.getNombre() %></td>
-            <td><code><%= usuario.getUsuario() %></code></td>
-            <td><%= usuario.getCorreo() %></td>
-            <td><%= usuario.getCelular() %></td>
+            <td><%= usuario.getEmail() %></td>
             <td><span class="badge"><%= usuario.getRol() %></span></td>
             <td>
-                <span class="estado <%= "Activo".equals(usuario.getEstado()) ? "activo" : "inactivo" %>">
-                    <%= usuario.getEstado() %>
+                <span class="estado <%= usuario.isEstado() ? "activo" : "inactivo" %>">
+                    <%= usuario.isEstado() ? "Activo" : "Inactivo" %>
                 </span>
             </td>
             <td class="acciones">

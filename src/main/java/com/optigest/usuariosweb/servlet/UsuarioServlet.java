@@ -61,35 +61,32 @@ public class UsuarioServlet extends HttpServlet {
 
         String idTexto = request.getParameter("id");
         String nombre = request.getParameter("nombre");
-        String nombreUsuario = request.getParameter("usuario");
-        String correo = request.getParameter("correo");
-        String clave = request.getParameter("clave");
-        String celular = request.getParameter("celular");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
         String rol = request.getParameter("rol");
-        String estado = request.getParameter("estado");
+        boolean estado = "on".equals(request.getParameter("estado"));
 
         try {
             boolean esNuevo = (idTexto == null || idTexto.isBlank());
 
             Usuario usuario = new Usuario();
             usuario.setNombre(nombre);
-            usuario.setUsuario(nombreUsuario);
-            usuario.setCorreo(correo);
-            usuario.setCelular(celular);
+            usuario.setEmail(email);
             usuario.setRol(rol);
             usuario.setEstado(estado);
 
             if (esNuevo) {
-                usuario.setClave(Seguridad.hashearClave(clave));
+                usuario.setPassword(Seguridad.hashearClave(password));
                 usuarioDAO.insertarUsuario(usuario);
             } else {
                 int id = Integer.parseInt(idTexto);
                 usuario.setId(id);
-                if (clave == null || clave.isBlank()) {
+                if (password == null || password.isBlank()) {
+                    // Campo vacio: se conserva el hash que ya estaba guardado.
                     Usuario usuarioActual = usuarioDAO.consultarUsuarioPorId(id);
-                    usuario.setClave(usuarioActual != null ? usuarioActual.getClave() : "");
+                    usuario.setPassword(usuarioActual != null ? usuarioActual.getPassword() : "");
                 } else {
-                    usuario.setClave(Seguridad.hashearClave(clave));
+                    usuario.setPassword(Seguridad.hashearClave(password));
                 }
                 usuarioDAO.actualizarUsuario(usuario);
             }

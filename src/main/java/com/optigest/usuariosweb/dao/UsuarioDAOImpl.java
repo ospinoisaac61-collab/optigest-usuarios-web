@@ -7,36 +7,43 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementacion de UsuarioDAO que persiste los usuarios en PostgreSQL
- * usando JDBC con PreparedStatement (evita inyeccion SQL).
+ * Implementación de UsuarioDAO que persiste los usuarios en PostgreSQL
+ * usando JDBC con PreparedStatement (evita inyección SQL).
+ *
+ * Los nombres de tabla y columnas siguen el diseño oficial de base de
+ * datos del proyecto (evidencia GA6-220501096-AA2-EV02/EV03): tabla
+ * "usuario", columnas id_usuario, nombre, email, password, rol, estado
+ * y fecha_creacion.
  */
 public class UsuarioDAOImpl implements UsuarioDAO {
 
     private static final String SQL_INSERTAR =
-            "INSERT INTO usuarios (nombre, usuario, correo, clave, celular, rol, estado) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO usuario (nombre, email, password, rol, estado) " +
+            "VALUES (?, ?, ?, ?, ?)";
 
     private static final String SQL_CONSULTAR_TODOS =
-            "SELECT id, nombre, usuario, correo, clave, celular, rol, estado " +
-            "FROM usuarios ORDER BY id";
+            "SELECT id_usuario, nombre, email, password, rol, estado, fecha_creacion " +
+            "FROM usuario ORDER BY id_usuario";
 
     private static final String SQL_CONSULTAR_POR_ID =
-            "SELECT id, nombre, usuario, correo, clave, celular, rol, estado " +
-            "FROM usuarios WHERE id = ?";
+            "SELECT id_usuario, nombre, email, password, rol, estado, fecha_creacion " +
+            "FROM usuario WHERE id_usuario = ?";
 
     private static final String SQL_ACTUALIZAR =
-            "UPDATE usuarios SET nombre = ?, usuario = ?, correo = ?, clave = ?, " +
-            "celular = ?, rol = ?, estado = ? WHERE id = ?";
+            "UPDATE usuario SET nombre = ?, email = ?, password = ?, rol = ?, estado = ? " +
+            "WHERE id_usuario = ?";
 
     private static final String SQL_ELIMINAR =
-            "DELETE FROM usuarios WHERE id = ?";
+            "DELETE FROM usuario WHERE id_usuario = ?";
 
     @Override
     public void insertarUsuario(Usuario usuario) throws SQLException {
+        // fecha_creacion no se envía: la base de datos la asigna sola (DEFAULT CURRENT_TIMESTAMP).
         try (Connection conexion = ConexionBD.obtenerConexion();
              PreparedStatement sentencia = conexion.prepareStatement(SQL_INSERTAR)) {
 
@@ -78,7 +85,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
              PreparedStatement sentencia = conexion.prepareStatement(SQL_ACTUALIZAR)) {
 
             asignarParametros(sentencia, usuario);
-            sentencia.setInt(8, usuario.getId());
+            sentencia.setInt(6, usuario.getId());
             sentencia.executeUpdate();
         }
     }
@@ -93,26 +100,27 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
     }
 
+    // Copia los campos editables del Usuario a los "?" del PreparedStatement,
+    // en el mismo orden en que aparecen en el SQL (nombre, email, password, rol, estado).
     private void asignarParametros(PreparedStatement sentencia, Usuario usuario) throws SQLException {
         sentencia.setString(1, usuario.getNombre());
-        sentencia.setString(2, usuario.getUsuario());
-        sentencia.setString(3, usuario.getCorreo());
-        sentencia.setString(4, usuario.getClave());
-        sentencia.setString(5, usuario.getCelular());
-        sentencia.setString(6, usuario.getRol());
-        sentencia.setString(7, usuario.getEstado());
+        sentencia.setString(2, usuario.getEmail());
+        sentencia.setString(3, usuario.getPassword());
+        sentencia.setString(4, usuario.getRol());
+        sentencia.setBoolean(5, usuario.isEstado());
     }
 
+    // Convierte una fila del ResultSet en un objeto Usuario.
     private Usuario mapearUsuario(ResultSet resultado) throws SQLException {
+        Timestamp fechaCreacion = resultado.getTimestamp("fecha_creacion");
         return new Usuario(
-                resultado.getInt("id"),
+                resultado.getInt("id_usuario"),
                 resultado.getString("nombre"),
-                resultado.getString("usuario"),
-                resultado.getString("correo"),
-                resultado.getString("clave"),
-                resultado.getString("celular"),
+                resultado.getString("email"),
+                resultado.getString("password"),
                 resultado.getString("rol"),
-                resultado.getString("estado")
+                resultado.getBoolean("estado"),
+                fechaCreacion != null ? fechaCreacion.toLocalDateTime() : null
         );
     }
 }

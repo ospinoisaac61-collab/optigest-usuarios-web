@@ -69,6 +69,9 @@
         <configuration>
           <webApp>
             <contextPath>/optigest-usuarios-web</contextPath>
+            <!-- Carpeta temporal fuera de OneDrive: la sincronizacion bloquea
+                 archivos y evita que Jetty los borre/recree al arrancar. -->
+            <tempDirectory>C:\jetty-tmp\optigest-usuarios-web</tempDirectory>
           </webApp>
           <httpConnector>
             <port>8080</port>
