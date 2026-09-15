@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiGest ERP — Iniciar sesión</title>
+<link rel="stylesheet" href="css/main.css">
+<style>
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0C2A50 0%, #1F4E79 50%, #2E75B6 100%);
+  }
+
+  .login-container {
+    width: min(420px, 96vw);
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.28);
+    overflow: hidden;
+  }
+
+  .login-header {
+    background: var(--navy);
+    padding: 32px 36px 28px;
+    text-align: center;
+  }
+
+  .login-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .login-logo-icon {
+    width: 44px; height: 44px;
+    background: var(--blue);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .login-logo-icon svg { width: 24px; height: 24px; color: #fff; }
+
+  .login-logo-text { text-align: left; }
+  .login-logo-text strong { font-size: 1.3rem; color: var(--white); font-weight: 700; display: block; }
+  .login-logo-text small  { font-size: .7rem; color: rgba(255,255,255,.5); }
+
+  .login-header p {
+    color: rgba(255,255,255,.7);
+    font-size: .85rem;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .login-body { padding: 32px 36px 36px; }
+
+  .login-body h2 {
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .login-body .sub {
+    font-size: .82rem;
+    color: var(--ink-3);
+    margin-bottom: 24px;
+  }
+
+  .input-icon {
+    position: relative;
+  }
+
+  .input-icon svg {
+    position: absolute; left: 12px; top: 50%;
+    transform: translateY(-50%);
+    width: 16px; height: 16px;
+    color: var(--ink-3);
+    pointer-events: none;
+  }
+
+  .input-icon .form-control { padding-left: 38px; }
+
+  .input-icon .toggle-pw {
+    position: absolute; right: 10px; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none;
+    cursor: pointer; padding: 4px;
+    color: var(--ink-3);
+    display: flex;
+    transition: color var(--transition);
+  }
+  .input-icon .toggle-pw:hover { color: var(--blue); }
+  .input-icon .toggle-pw svg { width: 16px; height: 16px; }
+
+  .form-control-pw { padding-right: 38px !important; }
+
+  .login-footer-text {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--ink-3);
+    margin-top: 20px;
+  }
+
+  .role-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 22px;
+  }
+
+  .role-pill {
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--blue-pale);
+    background: var(--blue-xlt);
+    font-size: .72rem;
+    color: var(--blue);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+  }
+
+  .role-pill:hover { background: var(--blue-pale); border-color: var(--blue-lt); }
+
+  .role-label {
+    font-size: .72rem;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="login-container">
+  <div class="login-header">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div class="login-logo-text">
+        <strong>OptiGest</strong>
+        <small>Sistema ERP · Aluminio &amp; Vidrio</small>
+      </div>
+    </div>
+    <p>Ingresa con tu usuario y contraseña para acceder al sistema.</p>
+  </div>
+
+  <div class="login-body">
+    <h2>Bienvenido</h2>
+    <p class="sub">Introduce tus credenciales para continuar.</p>
+
+    <form id="login-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="username">Usuario</label>
+        <div class="input-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input type="text" id="username" class="form-control" placeholder="Tu nombre de usuario" autocomplete="username">
+        </div>
+        <span class="form-error" id="username-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Contraseña</label>
+        <div class="input-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input type="password" id="password" class="form-control form-control-pw" placeholder="Tu contraseña">
+          <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Mostrar/ocultar contraseña">
+            <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <span class="form-error" id="password-error"></span>
+      </div>
+
+      <div class="role-label">Acceso rápido de demostración:</div>
+      <div class="role-pills">
+        <span class="role-pill" onclick="fillDemo('admin','admin123')">Administrador</span>
+        <span class="role-pill" onclick="fillDemo('lmartinez','lm123')">Vendedor</span>
+        <span class="role-pill" onclick="fillDemo('cherrera','ch123')">Jefe de taller</span>
+        <span class="role-pill" onclick="fillDemo('psalcedo','ps123')">Jefe de compras</span>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content: center; padding: 11px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Ingresar al sistema
+      </button>
+    </form>
+
+    <div class="login-footer-text">
+      Acceso restringido al personal autorizado por el Administrador del sistema.<br>
+      OptiGest ERP v1.0 &mdash; SENA · Ficha 3186674
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script>
+  function fillDemo(u, p) {
+    document.getElementById('username').value = u;
+    document.getElementById('password').value = p;
+  }
+
+  document.getElementById('toggle-pw').addEventListener('click', () => {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  });
+
+  const DEMO_USERS = {
+    admin:     { name: 'Isaac Ospino',   role: 'Administrador',   initials: 'IO' },
+    lmartinez: { name: 'Laura Martínez', role: 'Vendedor',        initials: 'LM' },
+    cherrera:  { name: 'Carlos Herrera', role: 'Jefe de taller',  initials: 'CH' },
+    psalcedo:  { name: 'Pedro Salcedo',  role: 'Jefe de compras', initials: 'PS' },
+    druiz:     { name: 'Diana Ruiz',     role: 'Bodega',          initials: 'DR' },
+    agomez:    { name: 'Ana Gómez',      role: 'Contador',        initials: 'AG' },
+  };
+
+  document.getElementById('login-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value.trim();
+    let valid = true;
+
+    ['username', 'password'].forEach(f => {
+      document.getElementById(f).classList.remove('error');
+      document.getElementById(f + '-error').textContent = '';
+    });
+
+    if (!u) {
+      document.getElementById('username').classList.add('error');
+      document.getElementById('username-error').textContent = 'El usuario es requerido.';
+      valid = false;
+    }
+    if (!p) {
+      document.getElementById('password').classList.add('error');
+      document.getElementById('password-error').textContent = 'La contraseña es requerida.';
+      valid = false;
+    }
+    if (!valid) return;
+
+    // Simular autenticación
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Verificando…';
+
+    setTimeout(() => {
+      if (u === 'admin' || ['lmartinez','cherrera','psalcedo','druiz','agomez'].includes(u)) {
+        const info = DEMO_USERS[u] || { name: u, role: 'Usuario', initials: u.slice(0,2).toUpperCase() };
+        try {
+          sessionStorage.setItem('optigest_session', JSON.stringify({ username: u, ...info }));
+        } catch (err) { /* sessionStorage puede fallar al abrir con doble clic (file://) */ }
+        const params = new URLSearchParams({ user: u, name: info.name, role: info.role, initials: info.initials });
+        window.location.href = 'index.html?' + params.toString();
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Ingresar al sistema`;
+        document.getElementById('username').classList.add('error');
+        document.getElementById('password').classList.add('error');
+        document.getElementById('password-error').textContent = 'Usuario o contraseña incorrectos. Intenta de nuevo.';
+      }
+    }, 900);
+  });
+</script>
+</body>
+</html>
