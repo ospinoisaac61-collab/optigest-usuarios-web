@@ -1,8 +1,19 @@
 <%-- Barra de navegacion comun a todos los modulos de OptiGest ERP --%>
+<%
+    Object usuarioSesionNav = session.getAttribute("usuarioSesion");
+    String nombreNav = "";
+    if (usuarioSesionNav instanceof com.optigest.usuariosweb.modelo.Usuario) {
+        nombreNav = com.optigest.usuariosweb.util.Html.escapar(
+                ((com.optigest.usuariosweb.modelo.Usuario) usuarioSesionNav).getNombre());
+    }
+%>
 <nav class="barra-nav">
     <span class="marca">OptiGest ERP</span>
+    <a href="<%= request.getContextPath() %>/inicio">Inicio</a>
     <a href="<%= request.getContextPath() %>/usuarios">Usuarios</a>
     <a href="<%= request.getContextPath() %>/productos">Productos</a>
     <a href="<%= request.getContextPath() %>/proveedores">Proveedores</a>
     <a href="<%= request.getContextPath() %>/compras">Compras</a>
+    <span class="nav-usuario"><%= nombreNav %></span>
+    <a class="nav-salir" href="<%= request.getContextPath() %>/logout">Cerrar sesi&oacute;n</a>
 </nav>

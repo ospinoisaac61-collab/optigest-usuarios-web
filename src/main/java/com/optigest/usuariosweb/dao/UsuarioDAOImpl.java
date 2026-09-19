@@ -41,6 +41,22 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     private static final String SQL_ELIMINAR =
             "DELETE FROM usuario WHERE id_usuario = ?";
 
+    private static final String SQL_AUTENTICAR =
+            "SELECT id_usuario, nombre, email, password, rol, estado, fecha_creacion " +
+            "FROM usuario WHERE email = ? AND password = ? AND estado = TRUE";
+
+    @Override
+    public Usuario autenticar(String email, String passwordHash) throws SQLException {
+        try (Connection conexion = ConexionBD.obtenerConexion();
+             PreparedStatement sentencia = conexion.prepareStatement(SQL_AUTENTICAR)) {
+            sentencia.setString(1, email);
+            sentencia.setString(2, passwordHash);
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                return resultado.next() ? mapearUsuario(resultado) : null;
+            }
+        }
+    }
+
     @Override
     public void insertarUsuario(Usuario usuario) throws SQLException {
         // fecha_creacion no se envía: la base de datos la asigna sola (DEFAULT CURRENT_TIMESTAMP).

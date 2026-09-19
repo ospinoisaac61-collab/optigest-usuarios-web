@@ -16,6 +16,16 @@ escritorio con JDBC).
 | Elementos de JSP                      | `index.jsp`, `WEB-INF/views/lista.jsp`, `WEB-INF/views/formulario.jsp` (directivas, scriptlets, expresiones) |
 | Conexión a base de datos (JDBC)       | `ConexionBD` + `UsuarioDAOImpl` (heredado del módulo AA2-EV01)      |
 
+## Acceso al sistema (login integrado)
+
+La aplicación abre en `/login` y valida contra la tabla `usuario` (contraseña
+comparada por su hash SHA-256; solo entran usuarios activos). Un filtro
+(`AutenticacionFiltro`) protege `/inicio`, `/usuarios`, `/productos`,
+`/proveedores` y `/compras`. Tras iniciar sesión se muestra un dashboard con
+totales reales y un menú común a todos los módulos.
+
+Usuario de demostración: `admin@optigest.co` / `admin123`.
+
 ## Rutas de la aplicación
 
 | Método | Ruta                              | Acción                                  |
