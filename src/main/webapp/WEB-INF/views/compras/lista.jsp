@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/estilos.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/views/nav.jspf" %>
 <div class="contenedor">
     <div class="encabezado">
         <h1>OptiGest ERP &mdash; Compras</h1>

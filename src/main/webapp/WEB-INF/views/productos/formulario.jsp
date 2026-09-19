@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/estilos.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/views/nav.jspf" %>
 <%
     Producto producto = (Producto) request.getAttribute("producto");
     if (producto == null) producto = new Producto();

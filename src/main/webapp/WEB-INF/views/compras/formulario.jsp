@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/estilos.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/views/nav.jspf" %>
 <%
     Compra compra = (Compra) request.getAttribute("compra");
     if (compra == null) compra = new Compra();

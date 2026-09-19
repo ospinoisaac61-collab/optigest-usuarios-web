@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/estilos.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/views/nav.jspf" %>
 <%
     Proveedor proveedor = (Proveedor) request.getAttribute("proveedor");
     if (proveedor == null) proveedor = new Proveedor();

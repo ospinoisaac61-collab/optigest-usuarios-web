@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/estilos.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/views/nav.jspf" %>
 <%
     // El servlet deja aqui el usuario a editar, o un Usuario vacio si es "nuevo".
     Usuario usuario = (Usuario) request.getAttribute("usuario");

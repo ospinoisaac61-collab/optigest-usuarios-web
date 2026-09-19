@@ -1,0 +1,8 @@
+<%-- Barra de navegacion comun a todos los modulos de OptiGest ERP --%>
+<nav class="barra-nav">
+    <span class="marca">OptiGest ERP</span>
+    <a href="<%= request.getContextPath() %>/usuarios">Usuarios</a>
+    <a href="<%= request.getContextPath() %>/productos">Productos</a>
+    <a href="<%= request.getContextPath() %>/proveedores">Proveedores</a>
+    <a href="<%= request.getContextPath() %>/compras">Compras</a>
+</nav>
