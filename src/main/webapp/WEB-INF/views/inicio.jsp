@@ -2,6 +2,7 @@
 <%@ page import="com.optigest.usuariosweb.modelo.Usuario" %>
 <%@ page import="com.optigest.usuariosweb.servlet.LoginServlet" %>
 <%@ page import="com.optigest.usuariosweb.util.Html" %>
+<%@ page import="com.optigest.usuariosweb.util.Permisos" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,23 +26,33 @@
 
     <!-- Los totales los calcula InicioServlet consultando la base de datos -->
     <div class="tarjetas">
+        <%-- Cada tarjeta se muestra solo si el rol del usuario tiene permiso sobre ese modulo --%>
+        <% String rolActual = sesionActual.getRol(); %>
+        <% if (Permisos.puedeAcceder(rolActual, "usuarios")) { %>
         <a class="tarjeta-kpi" href="<%= ctx %>/usuarios">
             <span class="kpi-etiqueta">Usuarios</span>
             <span class="kpi-valor"><%= request.getAttribute("totalUsuarios") %></span>
         </a>
+        <% } %>
+        <% if (Permisos.puedeAcceder(rolActual, "productos")) { %>
         <a class="tarjeta-kpi" href="<%= ctx %>/productos">
             <span class="kpi-etiqueta">Productos</span>
             <span class="kpi-valor"><%= request.getAttribute("totalProductos") %></span>
         </a>
+        <% } %>
+        <% if (Permisos.puedeAcceder(rolActual, "proveedores")) { %>
         <a class="tarjeta-kpi" href="<%= ctx %>/proveedores">
             <span class="kpi-etiqueta">Proveedores</span>
             <span class="kpi-valor"><%= request.getAttribute("totalProveedores") %></span>
         </a>
+        <% } %>
+        <% if (Permisos.puedeAcceder(rolActual, "compras")) { %>
         <a class="tarjeta-kpi" href="<%= ctx %>/compras">
             <span class="kpi-etiqueta">Compras</span>
             <span class="kpi-valor"><%= request.getAttribute("totalCompras") %></span>
             <span class="kpi-nota">$<%= String.format("%,.2f", (Double) request.getAttribute("montoCompras")) %> en total</span>
         </a>
+        <% } %>
     </div>
 </div>
 </body>

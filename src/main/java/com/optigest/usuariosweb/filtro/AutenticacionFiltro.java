@@ -1,6 +1,8 @@
 package com.optigest.usuariosweb.filtro;
 
+import com.optigest.usuariosweb.modelo.Usuario;
 import com.optigest.usuariosweb.servlet.LoginServlet;
+import com.optigest.usuariosweb.util.Permisos;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,7 +17,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Protege los modulos: si no hay una sesion iniciada, redirige al login.
+ * Protege los modulos en dos pasos: (1) si no hay sesion iniciada, redirige al
+ * login; (2) si el rol del usuario no tiene permiso sobre el modulo pedido,
+ * responde 403 con una pagina de "sin permiso".
  * /login, /logout y los recursos estaticos (css) no pasan por este filtro.
  */
 @WebFilter(filterName = "AutenticacionFiltro",
@@ -39,12 +43,21 @@ public class AutenticacionFiltro implements Filter {
         HttpServletResponse response = (HttpServletResponse) respuesta;
 
         HttpSession sesion = request.getSession(false);
-        boolean autenticado = sesion != null && sesion.getAttribute(LoginServlet.ATRIBUTO_SESION) != null;
+        Usuario usuario = sesion == null ? null : (Usuario) sesion.getAttribute(LoginServlet.ATRIBUTO_SESION);
 
-        if (autenticado) {
-            cadena.doFilter(solicitud, respuesta);
-        } else {
+        if (usuario == null) {
             response.sendRedirect(request.getContextPath() + "/login");
+            return;
         }
+
+        // La ruta (por ejemplo "/compras") indica el modulo que se quiere abrir.
+        String modulo = request.getServletPath().substring(1);
+        if (!Permisos.puedeAcceder(usuario.getRol(), modulo)) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            request.getRequestDispatcher("/WEB-INF/views/sin-permiso.jsp").forward(request, response);
+            return;
+        }
+
+        cadena.doFilter(solicitud, respuesta);
     }
 }

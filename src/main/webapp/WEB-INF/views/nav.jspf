@@ -1,19 +1,23 @@
-<%-- Barra de navegacion comun a todos los modulos de OptiGest ERP --%>
+<%-- Barra de navegacion comun a todos los modulos de OptiGest ERP.
+     Solo muestra los enlaces a los modulos que el rol del usuario puede abrir. --%>
 <%
     Object usuarioSesionNav = session.getAttribute("usuarioSesion");
     String nombreNav = "";
+    String rolNav = "";
     if (usuarioSesionNav instanceof com.optigest.usuariosweb.modelo.Usuario) {
-        nombreNav = com.optigest.usuariosweb.util.Html.escapar(
-                ((com.optigest.usuariosweb.modelo.Usuario) usuarioSesionNav).getNombre());
+        com.optigest.usuariosweb.modelo.Usuario u = (com.optigest.usuariosweb.modelo.Usuario) usuarioSesionNav;
+        nombreNav = com.optigest.usuariosweb.util.Html.escapar(u.getNombre());
+        rolNav = u.getRol();
     }
+    String ctxNav = request.getContextPath();
 %>
 <nav class="barra-nav">
     <span class="marca">OptiGest ERP</span>
-    <a href="<%= request.getContextPath() %>/inicio">Inicio</a>
-    <a href="<%= request.getContextPath() %>/usuarios">Usuarios</a>
-    <a href="<%= request.getContextPath() %>/productos">Productos</a>
-    <a href="<%= request.getContextPath() %>/proveedores">Proveedores</a>
-    <a href="<%= request.getContextPath() %>/compras">Compras</a>
+    <a href="<%= ctxNav %>/inicio">Inicio</a>
+    <% if (com.optigest.usuariosweb.util.Permisos.puedeAcceder(rolNav, "usuarios")) { %><a href="<%= ctxNav %>/usuarios">Usuarios</a><% } %>
+    <% if (com.optigest.usuariosweb.util.Permisos.puedeAcceder(rolNav, "productos")) { %><a href="<%= ctxNav %>/productos">Productos</a><% } %>
+    <% if (com.optigest.usuariosweb.util.Permisos.puedeAcceder(rolNav, "proveedores")) { %><a href="<%= ctxNav %>/proveedores">Proveedores</a><% } %>
+    <% if (com.optigest.usuariosweb.util.Permisos.puedeAcceder(rolNav, "compras")) { %><a href="<%= ctxNav %>/compras">Compras</a><% } %>
     <span class="nav-usuario"><%= nombreNav %></span>
-    <a class="nav-salir" href="<%= request.getContextPath() %>/logout">Cerrar sesi&oacute;n</a>
+    <a class="nav-salir" href="<%= ctxNav %>/logout">Cerrar sesi&oacute;n</a>
 </nav>

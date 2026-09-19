@@ -26,6 +26,17 @@ totales reales y un menú común a todos los módulos.
 
 Usuario de demostración: `admin@optigest.co` / `admin123`.
 
+### Permisos por rol
+
+| Rol | Módulos |
+|---|---|
+| Administrador | Usuarios, Productos, Proveedores, Compras |
+| Jefe de compras | Compras, Proveedores |
+| Contador | Compras |
+| Bodega, Vendedor, Jefe de taller | Productos |
+
+Solo el Administrador gestiona usuarios. Sin permiso se responde 403 (`sin-permiso.jsp`).
+
 ## Rutas de la aplicación
 
 | Método | Ruta                              | Acción                                  |
